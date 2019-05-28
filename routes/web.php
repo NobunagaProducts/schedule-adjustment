@@ -11,6 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+
+//top,新規作成画面
+Route::get('/', function (){
+    return view('top');
 });
+Route::post('/', 'EventController@creat');
+
+//イベント情報表示画面
+Route::get('/event/info?{eventid}', 'EventController@showInfo');
+
+//イベント編集画面
+Route::get('/event/edit?{eventid}', 'EventController@showEditInfo');
+Route::post('/event/edit?{eventid}', 'EventController@edit');
