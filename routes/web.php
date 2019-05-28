@@ -20,7 +20,7 @@
 Route::get('/', function (){
     return view('top');
 });
-Route::post('/', 'EventController@creat');
+Route::post('/', 'EventController@create');
 
 //イベント情報表示画面
 Route::get('/event/info?{eventid}', 'EventController@showInfo');
