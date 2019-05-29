@@ -61,8 +61,26 @@ class EventController extends Controller
         return view('event_edit', $param);
     }
     
-    public function edit()
+    public function edit(Request $request)
     {
+        var_dump('fadsfsadfa');
+        DB::transaction(function () use ($request) {
+            // todo:該当するイベントがない場合はDB処理しないようにする。
+            Event::where('id', session('event_info')['event_id'])
+                ->update([
+                    'event_name' => $request->event_name,
+                    'detail' => $request->detail,
+                    ]);
+            
+            PossibleDate::where('event_id', session('event_info')['event_id'])
+                ->delete();
+            PossibleDate::insertGetId([
+                'event_id' => session('event_info')['event_id'],
+                'possible_dates' => $request->possible_date,
+            ]);
+        });
+        var_dump('fadsfsadfa');
+        return redirect('event/edit');
     }
     
     public function delete()
