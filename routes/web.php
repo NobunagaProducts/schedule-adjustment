@@ -17,7 +17,7 @@
 
 
 //top,新規作成画面
-Route::get('/', function (){
+Route::get('/', function () {
     return view('top');
 });
 Route::post('/', 'EventController@create');
@@ -26,5 +26,5 @@ Route::post('/', 'EventController@create');
 Route::get('/event/info/{hash_value}', 'EventController@showInfo');
 
 //イベント編集画面
-Route::get('/event/edit/{eventid}', 'EventController@showEditInfo');
-Route::post('/event/edit/{eventid}', 'EventController@edit');
+Route::get('/event/edit', 'EventController@showEditInfo');
+Route::post('/event/edit', 'EventController@edit');
