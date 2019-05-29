@@ -52,17 +52,16 @@ class EventController extends Controller
     
     public function showEditInfo()
     {
-        return view('event_edit');
-    }
-    
-    public function edit()
-    {
         $param = [
             'event_name' => session('event_info')['event_name'],
             'detail' => session('event_info')['detail'],
             'possible_date' => session('event_info')['possible_date'],
         ];
         return view('event_edit', $param);
+    }
+    
+    public function edit()
+    {
     }
     
     public function delete()
