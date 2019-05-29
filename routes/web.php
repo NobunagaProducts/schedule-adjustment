@@ -23,8 +23,8 @@ Route::get('/', function (){
 Route::post('/', 'EventController@create');
 
 //イベント情報表示画面
-Route::get('/event/info?{eventid}', 'EventController@showInfo');
+Route::get('/event/info/{eventid}', 'EventController@showInfo');
 
 //イベント編集画面
-Route::get('/event/edit?{eventid}', 'EventController@showEditInfo');
-Route::post('/event/edit?{eventid}', 'EventController@edit');
+Route::get('/event/edit/{eventid}', 'EventController@showEditInfo');
+Route::post('/event/edit/{eventid}', 'EventController@edit');
