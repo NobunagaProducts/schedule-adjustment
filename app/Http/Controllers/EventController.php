@@ -43,15 +43,20 @@ class EventController extends Controller
             'detail' => $event->detail,
             'created_at' => $event->created_at,
             'possible_date' => $possible_date->possible_dates];
+
+        session(['hash_value', $hash_value]);
+        session(['event_info' => $param]);
         return view('event_information', $param);
     }
     
     public function showEditInfo()
     {
+        return view('event_edit');
     }
     
     public function edit()
     {
+        return view('event_edit');
     }
     
     public function delete()
