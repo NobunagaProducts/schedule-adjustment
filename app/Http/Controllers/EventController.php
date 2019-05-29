@@ -39,7 +39,8 @@ class EventController extends Controller
         $event = Event::where('hash_value', $hash_value)->first();
         $possible_date = PossibleDate::where('event_id', $event->id)->first();
         $param =
-            ['event_name' => $event->event_name,
+            ['event_id' => $event->id,
+            'event_name' => $event->event_name,
             'detail' => $event->detail,
             'created_at' => $event->created_at,
             'possible_date' => $possible_date->possible_dates];
