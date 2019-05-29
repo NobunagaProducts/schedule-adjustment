@@ -31,12 +31,19 @@ class EventController extends Controller
             return $event->hash_value;
         }, 5);
         // compactで$url_paramを渡す。
-        return redirect('event/info?eventid='.$url_param);
+        return redirect('event/info/'.$url_param);
     }
     
-    public function showInfo()
+    public function showInfo($hash_value)
     {
-        return view('event_infomation');
+        $event = Event::where('hash_value', $hash_value)->first();
+        $possible_date = PossibleDate::where('event_id', $event->id)->first();
+        $param =
+            ['event_name' => $event->event_name,
+            'detail' => $event->detail,
+            'created_at' => $event->created_at,
+            'possible_date' => $possible_date->possible_dates];
+        return view('event_information', $param);
     }
     
     public function showEditInfo()
