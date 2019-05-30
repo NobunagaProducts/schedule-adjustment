@@ -63,7 +63,6 @@ class EventController extends Controller
     
     public function edit(Request $request)
     {
-        var_dump('fadsfsadfa');
         DB::transaction(function () use ($request) {
             // todo:該当するイベントがない場合はDB処理しないようにする。
             Event::where('id', session('event_info')['event_id'])
@@ -79,7 +78,6 @@ class EventController extends Controller
                 'possible_dates' => $request->possible_date,
             ]);
         });
-        var_dump('fadsfsadfa');
         return redirect('event/edit');
     }
     
