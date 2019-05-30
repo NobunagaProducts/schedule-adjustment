@@ -36,14 +36,15 @@ class EventController extends Controller
     
     public function showInfo($hash_value)
     {
+        //todo:イベントが取得できなかった時の処理を追加。
         $event = Event::where('hash_value', $hash_value)->first();
         $possible_date = PossibleDate::where('event_id', $event->id)->first();
         $param =
             ['event_id' => $event->id,
-            'event_name' => $event->event_name,
-            'detail' => $event->detail,
-            'created_at' => $event->created_at,
-            'possible_date' => $possible_date->possible_dates];
+                'event_name' => $event->event_name,
+                'detail' => $event->detail,
+                'created_at' => $event->created_at,
+                'possible_date' => $possible_date->possible_dates];
         
         session(['hash_value', $hash_value]);
         session(['event_info' => $param]);
