@@ -28,3 +28,8 @@ Route::get('/event/info/{hash_value}', 'EventController@showInfo');
 //イベント編集画面
 Route::get('/event/edit', 'EventController@showEditInfo');
 Route::post('/event/edit', 'EventController@edit');
+
+//エラー画面
+Route::get('error', function (){
+    return view('error');
+});
