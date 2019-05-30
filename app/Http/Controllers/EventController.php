@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Event;
 use App\PossibleDate;
+use Exception;
 
 class EventController extends Controller
 {
@@ -64,22 +65,34 @@ class EventController extends Controller
     
     public function edit(Request $request)
     {
-        DB::transaction(function () use ($request) {
+        DB::beginTransaction();
+        try {
             // todo:該当するイベントがない場合はDB処理しないようにする。
-            Event::where('id', session('event_info')['event_id'])
+            $updated_event_count = Event::where('id', session('event_info')['event_id'])
                 ->update([
                     'event_name' => $request->event_name,
                     'detail' => $request->detail,
-                    ]);
+                ]);
             
-            PossibleDate::where('event_id', session('event_info')['event_id'])
+            $deleted_date_count = PossibleDate::where('event_id', session('event_info')['event_id'])
                 ->delete();
-            PossibleDate::insertGetId([
+            
+            $created_date_count = PossibleDate::insert([
                 'event_id' => session('event_info')['event_id'],
                 'possible_dates' => $request->possible_date,
             ]);
-        });
-        return redirect('event/edit');
+            
+            if (!($updated_event_count == 1 && $deleted_date_count >= 1 && $created_date_count === true)) {
+                throw new Exception('イベント編集時にエラー発生。');
+            }
+            
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            return redirect('error');
+        }
+        // todo: ハッシュ値の場所がおかしいので調査。理想:session('hash_value')
+        return redirect('event/info/' . session(1));
     }
     
     public function delete()
