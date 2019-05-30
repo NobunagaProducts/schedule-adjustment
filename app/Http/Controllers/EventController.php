@@ -67,7 +67,6 @@ class EventController extends Controller
     {
         DB::beginTransaction();
         try {
-            // todo:該当するイベントがない場合はDB処理しないようにする。
             $updated_event_count = Event::where('id', session('event_info')['event_id'])
                 ->update([
                     'event_name' => $request->event_name,
