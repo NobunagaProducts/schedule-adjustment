@@ -31,7 +31,7 @@ class EventController extends Controller
             return $event->hash_value;
         }, 5);
         // compactで$url_paramを渡す。
-        return redirect('event/info/'.$url_param);
+        return redirect('event/info/' . $url_param);
     }
     
     public function showInfo($hash_value)
