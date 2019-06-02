@@ -22,13 +22,12 @@ class EventController extends Controller
             $event->detail = $request->detail;
             $event->hash_value = Str::random(30);
             $event->save();
-    
-            // 候補日追加
-            // todo:TOP画面での複数日程のデザインと取得を考える。とりあえず日付は一つ
-            $possible_date = new PossibleDate;
-            $possible_date->event_id = $event->id;
-            $possible_date->possible_dates = $request->possible_dates;
-            $possible_date->save();
+            foreach ($request->possible_dates as $date) {
+                $possible_date = new PossibleDate;
+                $possible_date->event_id = $event->id;
+                $possible_date->possible_dates = $date;
+                $possible_date->save();
+            }
             return $event->hash_value;
         }, 5);
         
