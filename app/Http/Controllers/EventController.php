@@ -44,7 +44,9 @@ class EventController extends Controller
                 'event_name' => $event->event_name,
                 'detail' => $event->detail,
                 'created_at' => $event->created_at,
-                'possible_date' => $possible_date->possible_dates];
+                'hash_value' => $event->hash_value,
+                'possible_dates' => $possible_dates,
+            ];
         
         session(['hash_value', $hash_value]);
         session(['event_info' => $param]);
