@@ -38,7 +38,7 @@ class EventController extends Controller
     {
         //todo:イベントが取得できなかった時の処理を追加。
         $event = Event::where('hash_value', $hash_value)->first();
-        $possible_date = PossibleDate::where('event_id', $event->id)->first();
+        $possible_dates = PossibleDate::select('possible_dates')->where('event_id', $event->id)->get();
         $param =
             ['event_id' => $event->id,
                 'event_name' => $event->event_name,
