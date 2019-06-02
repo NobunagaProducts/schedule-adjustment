@@ -31,7 +31,7 @@ class EventController extends Controller
             $possible_date->save();
             return $event->hash_value;
         }, 5);
-        // compactで$url_paramを渡す。
+        
         return redirect('event/info/' . $url_param);
     }
     
