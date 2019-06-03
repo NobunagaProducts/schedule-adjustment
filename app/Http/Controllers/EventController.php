@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\Party;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -14,24 +15,7 @@ class EventController extends Controller
     
     public function create(Request $request)
     {
-
-        $url_param = DB::transaction(function () use ($request) {
-            // イベント追加
-            $event = new Event;
-            $event->event_name = $request->event_name;
-            $event->detail = $request->detail;
-            $event->hash_value = Str::random(30);
-            $event->save();
-            foreach ($request->possible_dates as $date) {
-                $possible_date = new PossibleDate;
-                $possible_date->event_id = $event->id;
-                $possible_date->possible_dates = $date;
-                $possible_date->save();
-            }
-            return $event->hash_value;
-        }, 5);
-        
-        return redirect('event/info/' . $url_param);
+        return redirect('event/info/'.Party::addEvent($request));
     }
     
     public function showInfo($hash_value)
