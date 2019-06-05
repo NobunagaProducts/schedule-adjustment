@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Facades\Party;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Event;
@@ -47,10 +48,16 @@ class EventController extends Controller
     
     public function showEditInfo()
     {
+        $possible_dates = Array();
+        
+        foreach (session('event_info')['possible_dates'] as $date){
+             $possible_dates[] = Carbon::parse($date)->format('Y-m-d\TH:i');
+        }
+        
         $param = [
             'event_name' => session('event_info')['event_name'],
             'detail' => session('event_info')['detail'],
-            'possible_date' => session('event_info')['possible_date'],
+            'possible_dates' => $possible_dates,
         ];
         return view('event_edit', $param);
     }
