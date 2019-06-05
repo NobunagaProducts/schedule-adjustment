@@ -22,14 +22,21 @@ class EventController extends Controller
     {
         //todo:イベントが取得できなかった時の処理を追加。
         $event = Event::where('hash_value', $hash_value)->first();
-        $possible_dates = PossibleDate::select('possible_dates')->where('event_id', $event->id)->get();
+        $possible_dates = PossibleDate::select('possible_dates')->where('event_id', $event->id)->get()->toArray();
+        $dates  = array();
+        
+        // 候補日をセッションで使いやすいよう整形
+        foreach ($possible_dates as $date){
+            $dates[] = $date['possible_dates'];
+        }
+
         $param =
             ['event_id' => $event->id,
                 'event_name' => $event->event_name,
                 'detail' => $event->detail,
                 'created_at' => $event->created_at,
                 'hash_value' => $event->hash_value,
-                'possible_dates' => $possible_dates,
+                'possible_dates' => $dates,
             ];
         
         session(['hash_value', $hash_value]);
