@@ -10,13 +10,14 @@ use Illuminate\Support\Facades\DB;
 use App\Event;
 use App\PossibleDate;
 use Exception;
+use PhpParser\Node\Expr\Array_;
 
 class EventController extends Controller
 {
     
     public function create(Request $request)
     {
-        return redirect('event/info/'.Party::addEvent($request));
+        return redirect('event/info/' . Party::addEvent($request));
     }
     
     public function showInfo($hash_value)
@@ -24,13 +25,13 @@ class EventController extends Controller
         //todo:イベントが取得できなかった時の処理を追加。
         $event = Event::where('hash_value', $hash_value)->first();
         $possible_dates = PossibleDate::select('possible_dates')->where('event_id', $event->id)->get()->toArray();
-        $dates  = array();
+        $dates = array();
         
         // 候補日をセッションで使いやすいよう整形
-        foreach ($possible_dates as $date){
+        foreach ($possible_dates as $date) {
             $dates[] = $date['possible_dates'];
         }
-
+        
         $param =
             ['event_id' => $event->id,
                 'event_name' => $event->event_name,
@@ -50,8 +51,8 @@ class EventController extends Controller
     {
         $possible_dates = Array();
         
-        foreach (session('event_info')['possible_dates'] as $date){
-             $possible_dates[] = Carbon::parse($date)->format('Y-m-d\TH:i');
+        foreach (session('event_info')['possible_dates'] as $date) {
+            $possible_dates[] = Carbon::parse($date)->format('Y-m-d\TH:i');
         }
         
         $param = [
