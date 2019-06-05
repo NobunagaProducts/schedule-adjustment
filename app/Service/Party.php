@@ -51,18 +51,23 @@ class Party
             
             $deleted_date_count = PossibleDate::where('event_id', session('event_info')['event_id'])
                 ->delete();
+    
+            $event = Array();
+            foreach ($request->possible_dates as $date) {
+                $event[] =
+                    array('event_id' => session('event_info')['event_id'],
+                        'possible_dates' => $date,
+                    );
+            }
             
-            $created_date_count = PossibleDate::insert([
-                'event_id' => session('event_info')['event_id'],
-                'possible_dates' => $request->possible_date,
-            ]);
-            
+            $created_date_count = PossibleDate::insert($event);
+    
             if (!($updated_event_count == 1 && $deleted_date_count >= 1 && $created_date_count === true)) {
                 throw new Exception('イベント編集時にエラー発生。' . ' イベント変更数:' . $updated_event_count . ' 候補日削除数' . $deleted_date_count . '作成候補日数' . $created_date_count);
             }
             
             DB::commit();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
             return redirect('error');
         }

@@ -64,33 +64,8 @@ class EventController extends Controller
     
     public function edit(Request $request)
     {
-        DB::beginTransaction();
-        try {
-            $updated_event_count = Event::where('id', session('event_info')['event_id'])
-                ->update([
-                    'event_name' => $request->event_name,
-                    'detail' => $request->detail,
-                ]);
-            
-            $deleted_date_count = PossibleDate::where('event_id', session('event_info')['event_id'])
-                ->delete();
-            
-            $created_date_count = PossibleDate::insert([
-                'event_id' => session('event_info')['event_id'],
-                'possible_dates' => $request->possible_date,
-            ]);
-            
-            if (!($updated_event_count == 1 && $deleted_date_count >= 1 && $created_date_count === true)) {
-                throw new Exception('イベント編集時にエラー発生。');
-            }
-            
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollback();
-            return redirect('error');
-        }
-        // todo: ハッシュ値の場所がおかしいので調査。理想:session('hash_value')
-        return redirect('event/info/' . session(1));
+        Party::editEvent($request);
+        return redirect('event/info/' . session('event_info')['hash_value']);
     }
     
     public function delete()
