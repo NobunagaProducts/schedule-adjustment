@@ -33,3 +33,9 @@ Route::post('/event/edit', 'EventController@edit');
 Route::get('error', function (){
     return view('error');
 });
+
+// 認証機能
+Auth::routes();
+
+// ログイン成功画面
+Route::get('/home', 'HomeController@index')->name('home');
