@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Service\Party;
+use App\Service\PartyService;
 use Illuminate\Support\ServiceProvider;
 
 class PartyServiceProvider extends ServiceProvider
@@ -24,6 +24,6 @@ class PartyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->bind('Party', Party::class);
+        $this->app->bind('PartyService', PartyService::class);
     }
 }
