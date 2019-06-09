@@ -15,6 +15,10 @@ class CreatePartiesTable extends Migration
     {
         Schema::create('parties', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('hash_value');
+            $table->string('event_name');
+            $table->string('detail');
+            $table->string('author')->default('');
             $table->timestamps();
         });
     }
