@@ -24,6 +24,6 @@ class PartyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->bind('Party', PartyService::class);
+        $this->app->bind('PartyService', PartyService::class);
     }
 }
