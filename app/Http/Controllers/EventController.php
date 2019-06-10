@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\Party;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
-use App\Event;
-use App\PossibleDate;
-use Exception;
-use PhpParser\Node\Expr\Array_;
+use App\Facades\Party;
 
 class EventController extends Controller
 {
-    
     public function create(Request $request)
     {
         return redirect('event/info/' . Party::addEvent($request));
@@ -22,24 +16,7 @@ class EventController extends Controller
     
     public function showInfo($hash_value)
     {
-        //todo:イベントが取得できなかった時の処理を追加。
-        $event = Event::where('hash_value', $hash_value)->first();
-        $possible_dates = PossibleDate::select('possible_dates')->where('event_id', $event->id)->get()->toArray();
-        $dates = array();
-        
-        // 候補日をセッションで使いやすいよう整形
-        foreach ($possible_dates as $date) {
-            $dates[] = $date['possible_dates'];
-        }
-        
-        $param =
-            ['event_id' => $event->id,
-                'event_name' => $event->event_name,
-                'detail' => $event->detail,
-                'created_at' => $event->created_at,
-                'hash_value' => $event->hash_value,
-                'possible_dates' => $dates,
-            ];
+        $param = Party::showInfo($hash_value);
         
         session(['hash_value', $hash_value]);
         session(['event_info' => $param]);

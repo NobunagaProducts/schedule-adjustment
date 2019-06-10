@@ -230,7 +230,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Party' => App\Service\Party::class,
+        'Party' => App\Service\PartyService::class,
     ],
 
 ];

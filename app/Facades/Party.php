@@ -9,6 +9,6 @@ class Party extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'Party';
+        return 'PartyService';
     }
 }
