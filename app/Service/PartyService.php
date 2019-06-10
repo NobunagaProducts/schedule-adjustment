@@ -40,8 +40,8 @@ class PartyService
     public function showInfo($hash_value)
     {
         //todo:イベントが取得できなかった時の処理を追加。
-        $event = Party::where('hash_value', $hash_value)->first();
-        $possible_dates = PossibleDate::select('possible_dates')->where('event_id', $event->id)->get()->toArray();
+        $party = Party::where('hash_value', $hash_value)->first();
+        $possible_dates = PossibleDate::select('possible_dates')->where('event_id', $party->id)->get()->toArray();
         $dates = array();
         
         // 候補日をセッションで使いやすいよう整形
@@ -50,11 +50,11 @@ class PartyService
         }
         
         $param =
-            ['event_id' => $event->id,
-                'event_name' => $event->event_name,
-                'detail' => $event->detail,
-                'created_at' => $event->created_at,
-                'hash_value' => $event->hash_value,
+            ['event_id' => $party->id,
+                'event_name' => $party->event_name,
+                'detail' => $party->detail,
+                'created_at' => $party->created_at,
+                'hash_value' => $party->hash_value,
                 'possible_dates' => $dates,
             ];
         
