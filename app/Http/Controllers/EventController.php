@@ -21,7 +21,7 @@ class EventController extends Controller
         session(['hash_value', $hash_value]);
         session(['event_info' => $param]);
         
-        return view('event_information', $param);
+        return view('contents/event_information', $param);
     }
     
     public function showEditInfo()
@@ -37,7 +37,7 @@ class EventController extends Controller
             'detail' => session('event_info')['detail'],
             'possible_dates' => $possible_dates,
         ];
-        return view('event_edit', $param);
+        return view('contents/event_edit', $param);
     }
     
     public function edit(Request $request)
