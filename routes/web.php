@@ -11,14 +11,9 @@
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
-
 //top,新規作成画面
 Route::get('/', function () {
-    return view('top');
+    return view('contents/event_create');
 });
 Route::post('/', 'EventController@create');
 
@@ -30,8 +25,8 @@ Route::get('/event/edit', 'EventController@showEditInfo');
 Route::post('/event/edit', 'EventController@edit');
 
 //エラー画面
-Route::get('error', function (){
-    return view('error');
+Route::get('error', function () {
+    return view('errors/error');
 });
 
 // 認証機能
